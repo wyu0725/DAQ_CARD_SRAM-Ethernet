@@ -1,0 +1,112 @@
+/*        definition of DM9000A's registers        */
+//       Register   value/offset Description  
+`define  IO_addr  1'b0
+`define  IO_data   1'b1
+`define STD_DELAY 500   //20us
+`define INIT_SUCCESS     1'b1
+`define INIT_FAIL             1'b0
+`define  NCR          16'h0000      /*Network Control Register*/
+`define  NSR          16'h0001      /*Network Status Register*/
+`define  TCR          16'h0002      /*TX Control Register*/
+`define  TSRI         16'h0003      /*TX Status Register I */
+`define  TSRII        16'h0004      /*TX Status Register II*/
+`define  RCR          16'h0005      /*RX Control Register*/
+`define  RSR          16'h0006      /*RX Status Register*/
+`define  ROCR        16'h0007      /*Recieve Overflow Counter Register*/
+`define  BPTR        16'h0008      /*Back Pressure Threshold Register(default value after reset 37H)*/
+`define  FCTR        16'h0009      /*Flow Control Threshold Register(default value after reset 38H)*/
+`define  FCR          16'h000a      /*RX Flow Control Register*/
+`define  EPCR        16'h000b      /*EEPROM & PHY Control Register*/
+`define  EPAR        16'h000c      /*EEPROM & PHY Address Register(default value after reset 40H)*/
+`define  EPDRL      16'h000d      /*EEPROM & PHY Low Byte Data Register*/
+`define  EPDRH     16'h000e      /*EEPROM & PHY High Byte Data Register*/
+`define  WCR          16'h000f      /*Wake Up Control Register (in 8-bit mode) */
+`define  PAB_0       16'h0010         /*Physical Address Register(Determined by EEPROM)0*/
+`define  PAB_1       16'h0011         /*Physical Address Register(Determined by EEPROM)1*/
+`define  PAB_2       16'h0012         /*Physical Address Register(Determined by EEPROM)2*/
+`define  PAB_3       16'h0013         /*Physical Address Register(Determined by EEPROM)3*/
+`define  PAB_4       16'h0014         /*Physical Address Register(Determined by EEPROM)4*/
+`define  PAB_5       16'h0015         /*Physical Address Register(Determined by EEPROM)5*/
+`define  MAB_0      16'h0016         /*Multicast Address Register0*/
+`define  MAB_1      16'h0017         /*Multicast Address Register1*/
+`define  MAB_2      16'h0018         /*Multicast Address Register2*/
+`define  MAB_3      16'h0019         /*Multicast Address Register3*/
+`define  MAB_4      16'h001a         /*Multicast Address Register4*/
+`define  MAB_5      16'h001b         /*Multicast Address Register5*/
+`define  MAB_6      16'h001c         /*Multicast Address Register6*/
+`define  MAB_7      16'h001d         /*Multicast Address Register7*/
+`define  GPCR        16'h001e         /*Genneral Purpose Control Register(in 8-bit mode)(default value after reset 01H)*/
+`define  GPR           16'h001f         /*Genneral Purpose Register*/
+`define  TRPAL      16'h0022         /*TX SRAM Read Pointer Address Low Byte*/
+`define  TRPAH     16'h0023          /*TX SRAM Read Pointer Address High Byte*/
+`define  RWPAL     16'h0024         /*RX SRAM Write Pointer Address Low Byte */
+`define  RWPAH    16'h0025         /*RX SRAM Write Pointer Address High Byte(default value after reset 0CH)*/
+//`define  VID        16'h28-29   /*Vendor ID default value 0a46h */
+//`define  PID        16'h2a-2b   /*Product ID defalut value 9000h */
+`define  CHIPR      16'h002c      /*Chip revevision defalut value 18h*/
+`define  TCR2        16'h002d      /*TX Control Register 2*/
+`define  OCR          16'h002e      /*Operation Control Register*/
+`define  SMCR       16'h002f      /*Special Mode Control Register*/
+`define  ETXCSR   16'h0030      /*Early Transmit Control/Status Register*/
+`define  TCSCR      16'h0031      /*Transmit Check Sum Control Register*/
+`define  RCSCSR    16'h0032      /*Receive Check Sum Control Status Register*/
+`define  MRCMDX  16'h00f0      /*Memory Data Pre-Fetch Read Command Without Address Increment Register*/
+`define  MRCMDX1 16'h00f1      /*Memory Data Read Command With Address Increment Register*/
+`define  MRCMD      16'h00f2      /*Memory Data Read Command With Address Increment Register*/
+`define  MRRL          16'h00f4      /*Memory Data Read_address Register Low Byte*/
+`define  MRRH         16'h00f5      /*Memory Data Read_address Register High Byte*/
+`define  MWCMDX   16'h00f6      /*Memory Data Write Command Without Address Increment Register*/
+`define  MWCMD      16'h00f8      /*Memory Data Write Command With Address Increment Register*/
+`define  MWRL          16'h00fa      /*memory Data Write_address Register Low Byte */
+`define  MWRH          16'h00fb      /*Memory Data Write_address Register High Byte*/
+`define  TXPLL          16'h00fc      /*TX Packet Length LowByte Reigster*/
+`define  TXPLH      16'h00fd      /*TX Packet Length HighByte Register*/
+`define  ISR            16'h00fe      /*Interrupt Status Register*/
+`define  IMR           16'h00ff      /*Interrupt Mask Register*/
+/********registers difinition for PHY(used in PHY write/read module)************/
+//            name       offset      description
+`define BMCR       16'd00    /*Basic Mode Control Register*/
+`define BMSR       16'd01    /*Basic Mode Status Register*/
+`define PHYID1   16'd02    /*PHY ID Identifier #1*/
+`define PHYID2   16'd03    /*PHY ID Idebtifier #2*/
+`define ANAR       16'd04    /*Auto-negotiation Advertisement Register*/
+`define ANLPAR  16'd05    /*Auto-negotiation Link Partner Ability Register*/
+`define ANER       16'd06    /*Auto-negotiation Expansion Register*/
+`define DSCR       16'd16    /*DAVICOM Specified Configuration Register*/
+`define DSCSR     16'd17    /*DAVICOM Specified Configuration and Status Register*/
+`define BTCSR 16'd18    /*10BASE-T Configuration/Status*/
+`define PWDOR    16'd19   /*Power Down Control Register*/
+`define Specified_Reg 16'd20 /*Specified config Register*/
+/**************************************************/
+`define PHY_reset 16'h8000
+`define PHY_txab 16'h05e1   /*set PHY advertised ability:Full-capability+Flow-control(if necessary)*/
+`define RCR_set 16'h30 /*skip CRC_packet and skip long packet*/
+`define RX_ENABLE 16'h01 /*to enable RX machine*/
+`define PASS_MULTICAST 16'h08 
+`define TCR_set 16'h00
+`define TX_REQUEST 16'h01
+`define DM9000_PKT_READY 8'h01  /*packets ready to receive*/
+`define DM9000_PKT_UNREADY 8'h00 /*packets unready*/
+`define PACKET_MIN_SIZE 8'h40     /*received packt min size 64bytes*/
+`define PACKET_MAX_SIZE 1522     /*RX largest legal size packet*/
+`define DM9000_PKT_MAX 3072      /*TX 1 packet max size without 4-byte CRC*/
+/******************protocol********************************************************/
+`define ARP_PKT 16'h0806               /*帧类型为ARP*/
+`define IP_PKT 16'h0800                  /*帧类型为IP*/
+`define MAC_Addr0 8'hf0                 /*DM9000a的MAC地址6字节*/
+`define MAC_Addr1 8'hde
+`define MAC_Addr2 8'hf1
+`define MAC_Addr3 8'hf1
+`define MAC_Addr4 8'h1f
+`define MAC_Addr5 8'h77
+`define IP_addr 32'hC0A80065          /*Dm9000a的IP地址192.168.0.101*/
+`define ARP_REQ_SIG  16'h0001              /*ARP请求*/
+`define ARP_ACK_SIG  16'h0002              /*ARP应答*/
+`define ICMP_PKT 8'h01
+`define UDP_PKT 8'h11
+`define Ping_PKT_Request 16'h0800               /*Ping回显请求*/
+`define Ping_PKT_ACK       16'h0000              /*Ping回显回答*/
+`define PC_Port 16'h0FA0                                 /*PC机UDP接收端口*/
+`define DM9000A_Port 16'h0400                     /*Dm9000a的UDP接收端口*/
+`define DM9000A_Port_src 16'h0800              /*Dm9000a的UDP发送端口*/
+/*************************************/
